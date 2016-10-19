@@ -1,28 +1,35 @@
 #AngularJS Tutorials by tmosest
-
-This is a set of tutorial videos that I've created to teach others AngularJs.
-
-We will be working our way through Angular 1.0 and 2.0. I'll try to include 3'rd party modules and updates for future releases of Angular.
-
 ##Video 0: Working with the github Repository
 
 In this video we will become familiar with the github repo.
 
-####Learning Objectives
+####Learning Objectives:
 * How to clone it.
 * The structure of it.
 * Easiest ways to follow along.
 
-Next video we will create our first application.
+###Cloning the repo:
 
-##Video 1: Hello Angular
+In stead of simplying cloning the repository like you usually would, we are going to clone a bare version of it using:
 
-In this video we are going to create the hello world app of AgularJs.
+```
+git clone --bare https://github.com/tmosest/YouTubeAngularTutorials.git
+```
 
-This will be a simple input feild that has two way databing to header element in the DOM.
+This will allow you to follow along without working about overloading my remote repository.
 
-We will also compare how much code this requires in comparison to jQuery.
+###Navigating the repo:
 
-####Learning Objectives
-* ngApp
-* ngModel
+Now that you have the repository files, you can see which videos you have by looking at branches with:
+
+```
+git branch
+```
+
+This should show a listing of all the avaliable video branches. They should be of the format video_{number}{B/E} where number is the video number and B/E stand for the begining and ending project.
+
+To navigate to a specific branch use the following:
+
+```
+git checkout [branch]
+```

@@ -1,5 +1,5 @@
 #AngularJS Tutorials by tmosest
-##Video 0: Working with the github Repository
+##Video 1: Working with the github Repositor
 
 In this video we will become familiar with the github repo.
 
@@ -13,12 +13,20 @@ In this video we will become familiar with the github repo.
 In stead of simplying cloning the repository like you usually would, we are going to clone a bare version of it using:
 
 ```
-git clone --bare https://github.com/tmosest/YouTubeAngularTutorials.git
+clone --bare https://github.com/tmosest/YouTubeAngularTutorials.git tmosestDevTutorials
 ```
 
 This will allow you to follow along without working about overloading my remote repository.
 
 ###Navigating the repo:
+
+First navigate into the repo folder using
+
+``''
+cd tmosestDevTutorials
+```
+
+Note: Tabs will autocomplete the folder name after a few keystrokes.
 
 Now that you have the repository files, you can see which videos you have by looking at branches with:
 

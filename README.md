@@ -1,35 +1,52 @@
 #AngularJS Tutorials by tmosest
-##Video 0: Working with the github Repository
+##Video 0: What you will need and a basic introduction.
 
-In this video we will become familiar with the github repo.
+In this video you will download the things that you are going to need to get started,
+and see a very basic example of the AngularJS Hello World app.
 
 ####Learning Objectives:
-* How to clone it.
-* The structure of it.
-* Easiest ways to follow along.
+* Download Git.
+* Download a text editor.
+* See basic example of jQuery vs AngularJS.
 
-###Cloning the repo:
+###Download Git
 
-In stead of simplying cloning the repository like you usually would, we are going to clone a bare version of it using:
+To download git:
 
-```
-git clone --bare https://github.com/tmosest/YouTubeAngularTutorials.git
-```
+1) For windows users:
 
-This will allow you to follow along without working about overloading my remote repository.
+Simply google git and navigate to https://git-scm.com/ from there you will find a download for it. I highly recommend that you install it using the Git Bash Version to keep the linux commands separate from your windows commands.
 
-###Navigating the repo:
+2) For Mac users:
 
-Now that you have the repository files, you can see which videos you have by looking at branches with:
+You can install the GUI version from https://git-scm.com/ however if you want to install the command line version which I recommend then you should google how to install brew and use it to install git instead.
 
-```
-git branch
-```
+Here is a good article on how to do this: https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/
 
-This should show a listing of all the avaliable video branches. They should be of the format video_{number}{B/E} where number is the video number and B/E stand for the begining and ending project.
+###Download a text editor
 
-To navigate to a specific branch use the following:
+There are plenty on the market, however here are a few of my recommendations:
 
-```
-git checkout [branch]
-```
+1) Microsoft's Visual Studio Code:
+
+https://code.visualstudio.com/c?utm_expid=101350005-35.Eg8306GUR6SersZwpBjURQ.2&utm_referrer=https%3A%2F%2Fwww.google.com%2F
+
+2) Atom:
+
+https://atom.io/
+
+3) Sublime Text:
+
+https://www.sublimetext.com/
+
+4) Dream Weaver:
+
+http://www.adobe.com/products/dreamweaver.html
+
+5) Bracket
+
+http://brackets.io/
+
+###jQuery vs AngularJS
+
+We will go over the major difference between the two through the remaining videos as you learn how to use AngularJS. AngularJS is a very powerful frame work and a simple comparison between AngularJS and jQuery would be that jQuery is a hammer while AngularJS is a bag containing a hammer, a saw, a wrench, a swiss army knife, etc..

@@ -1,0 +1,38 @@
+Angular JS Video: 0
+
+Hello Youtube, my name is Tyler Moses and thank you for tuning into tmosestDEV: the YouTube channel for all your Development needs. In this series we will be learning about Angular JS and UI development.
+
+AngularJS is a super heroic Javascript Framework that utilizes the Model-View-Whatever paradigm or MVW for short. They coined the MVW abbreviated to represent the fact that AngularJS is perfect for the a Model-View-Controller (MVC) or Model-View-View-Controller style of development.
+
+AngularJS has many other great features:
+It provides structure, correcting the Wild West approach taken by jQuery.
+It has built in two-way and three-way data binding.
+Great for single-page applications (SPA) and Modular Test Driven Development (TDD).
+
+Now with that being said, Google has recently released Angular 2.0, which can seem very strange in comparison to Angular 1.0 so we are going to start with version 1 and work our way up.
+
+If you’re wondering what right I have to teach your anything, rest assured that I wonder the same thing. However if it counts for anything, I have been employed as a full-stack web developer for over 3 years and currently work at Anthem as an AngularJS/UI developer on the Anthem Anywhere app, and have was invited to interview with Google at the end of the month.
+
+To make my boss happy, I would like to mention that the Anthem Anywhere app;  has seen dramatic improvement over the last year, which helped it to win several awards: including most innovative health app of 2016. So if you have a moment, you should go check it out.
+
+For the first few videos, all that you are going to need is a text editor and git. I would highly recommend that you also make a Github account too if you don’t have one.
+
+Here are a few basic text editors that are nice.
+
+Visual Studio Code: which supports a large number of languages. If the language you want isn’t supposed by default that can easily be fixed with a plugin. Also it supports TypeScript right out of the box which will be helpful when we start Angular 2.0: since it was written in TypeScript. VSC also supports side-by-side coding, IntelliSense or autocompletion, has it’s own command pallets, markdown preview, git support, helps with debugging. I would like to mention that I don’t work at Microsoft yet… so I’m not trying to sell you their free product.
+Atom: is another good text editor that a lot of people in the Angular community use. I like it and use it at work everyday. It has a lot of community packages that dd extra support. It also supports Markdown Preview and git integration.
+Sublime-text: really needs no introduction, this is an amazing text-editor that a lot of people use.
+Dreamweaver: Not a bad text editor by Adobe. I use it for somethings because it has FTP built into it. If you have the photoshop suit you’ll already have it.
+Brackets: Don’t really like this one, but it is free, written in Java Script and you wont need admin rights at work to download it. However it gets mad if there are more than 2K files in your folder.
+
+So pick you text editor. Keep cycling until you find one that you love and then defend it to the death. After that you can pick which side of the Tabs vs Spaces war you want to be on.
+
+Now if you don’t have git, find you way over to https://git-scm.com/ and download it. If you don’t have GitHub find you way over to GitHub.com and register. Then you can search for my account or the Github repo for this series and star them. Next video we will go over how to clone the repo and track your progress, so don’t worry about that.
+
+Now that we are done with the basics let’s look at a real example of the hello world AngularJS app and compare it to jQuery. Now the hello world for AngularJS is a simple text input attached to a paragraph or header with two-way data-binding.
+
+As you can see, both the examples do the exact same thing, however if we look under the hood we will see two completely different things. The jQuery example uses roughly 4 lines of code, while the Angular example uses none. For the jQuery example we had to use two additional id attributes for the Angular Example all we had to do was add an ng-model attribute for the two-way data-binding and a ng-app attribute to the top to make it work.
+
+Very easy and very clean. I hope you can already see how much easier this is going to be and that yo enjoyed the video. Please like and subscribe. This is not the only series that I will be producing. There will also be videos on Algorithms and Data Structures coming out soon and another series on how to get a job at the Big Four.
+
+Thank you for watching and keep coding!

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jQuery Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <p id="name">Hello </p>
+    <input id="input" type="text"/>
+    <script>
+      $(document).ready(function() {
+        $("#input").keyup(function() {
+          var name = $("#input").val();
+          $("#name").html("Hello " + name);
+        });
+      });
+    </script>
+  </body>
+</html>

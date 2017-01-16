@@ -50,3 +50,26 @@ http://brackets.io/
 ###jQuery vs AngularJS
 
 We will go over the major difference between the two through the remaining videos as you learn how to use AngularJS. AngularJS is a very powerful frame work and a simple comparison between AngularJS and jQuery would be that jQuery is a hammer while AngularJS is a bag containing a hammer, a saw, a wrench, a swiss army knife, etc..
+
+If we look at the hello world examples for AngularJS and jQuery, we will see that we had to add 4+ lines of code for the jQuery example:
+
+```javascript
+$(document).ready(function() {
+        $("#input").keyup(function() {
+          var name = $("#input").val();
+          $("#name").html("Hello " + name);
+        });
+      });
+```
+
+As compared to the AngularJS example where we did not add one additional line of code.
+
+For the jQuery example we also had to add two id attrributes:
+
+```html
+<p id="name">Hello </p>
+<input id="input" type="text"/>
+```
+
+While for the for the AngularJS example all we had to add was `ng-app`, `ng-model="name"` and `{{name}}`.
+    

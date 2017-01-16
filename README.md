@@ -1,28 +1,75 @@
 #AngularJS Tutorials by tmosest
+##Video 0: What you will need and a basic introduction.
 
-This is a set of tutorial videos that I've created to teach others AngularJs.
+In this video you will download the things that you are going to need to get started,
+and see a very basic example of the AngularJS Hello World app.
 
-We will be working our way through Angular 1.0 and 2.0. I'll try to include 3'rd party modules and updates for future releases of Angular.
+####Learning Objectives:
+* Download Git.
+* Download a text editor.
+* See basic example of jQuery vs AngularJS.
 
-##Video 0: Working with the github Repository
+###Download Git
 
-In this video we will become familiar with the github repo.
+To download git:
 
-####Learning Objectives
-* How to clone it.
-* The structure of it.
-* Easiest ways to follow along.
+1) For windows users:
 
-Next video we will create our first application.
+Simply google git and navigate to https://git-scm.com/ from there you will find a download for it. I highly recommend that you install it using the Git Bash Version to keep the linux commands separate from your windows commands.
 
-##Video 1: Hello Angular
+2) For Mac users:
 
-In this video we are going to create the hello world app of AgularJs.
+You can install the GUI version from https://git-scm.com/ however if you want to install the command line version which I recommend then you should google how to install brew and use it to install git instead.
 
-This will be a simple input feild that has two way databing to header element in the DOM.
+Here is a good article on how to do this: https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/
 
-We will also compare how much code this requires in comparison to jQuery.
+###Download a text editor
 
-####Learning Objectives
-* ngApp
-* ngModel
+There are plenty on the market, however here are a few of my recommendations:
+
+1) Microsoft's Visual Studio Code:
+
+https://code.visualstudio.com/c?utm_expid=101350005-35.Eg8306GUR6SersZwpBjURQ.2&utm_referrer=https%3A%2F%2Fwww.google.com%2F
+
+2) Atom:
+
+https://atom.io/
+
+3) Sublime Text:
+
+https://www.sublimetext.com/
+
+4) Dream Weaver:
+
+http://www.adobe.com/products/dreamweaver.html
+
+5) Bracket
+
+http://brackets.io/
+
+###jQuery vs AngularJS
+
+We will go over the major difference between the two through the remaining videos as you learn how to use AngularJS. AngularJS is a very powerful frame work and a simple comparison between AngularJS and jQuery would be that jQuery is a hammer while AngularJS is a bag containing a hammer, a saw, a wrench, a swiss army knife, etc..
+
+If we look at the hello world examples for AngularJS and jQuery, we will see that we had to add 4+ lines of code for the jQuery example:
+
+```javascript
+$(document).ready(function() {
+        $("#input").keyup(function() {
+          var name = $("#input").val();
+          $("#name").html("Hello " + name);
+        });
+      });
+```
+
+As compared to the AngularJS example where we did not add one additional line of code.
+
+For the jQuery example we also had to add two id attrributes:
+
+```html
+<p id="name">Hello </p>
+<input id="input" type="text"/>
+```
+
+While for the for the AngularJS example all we had to add was `ng-app`, `ng-model="name"` and `{{name}}`.
+    

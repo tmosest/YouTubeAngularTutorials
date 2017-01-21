@@ -152,7 +152,7 @@ Now tht we have made some changes to the file lets add it to our github repo:
 ```
 git add -A 
 git commit -m "Updated calculator.controller.js"
-git push -u github vide_1
+git push -u github video_1
 ```
 
 Now if we go over to our github page we should see that our new branh has been created.

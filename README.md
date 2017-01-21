@@ -105,10 +105,56 @@ git push -u github video_0
 
 If you visit you github repo you should now see the README.md from video 0.
 
+For future videos you will just want to have a `video_#` branch and not worry about `b\e`.
+
 ### Basic Calculator:
 
 Now that we are done with learning about git procedure, let's build a basic calculator.
 
 Checkout the `remotes/origin/video_1b` branch which contains the starting files:
 
-....
+```
+git checkout -b video_1 remotes/origin/video_1b
+```
+
+In this folder you will see a folder titled [calculator](./calculator).
+
+Inside this folder you will see two files.
+
+1. [index.html](./calculator/index.html): the view for our calculator.
+2. [calculator.controller.js](.calculator/js/calculator.js): the controller for our calculator.
+
+If we look inside the [index.html](./calculator/index.html) file we see a few things that are different from the hello world example.
+
+* We have added an additional `<script></script` tag that links to our custom controller.
+* Our `ng-app` attribute now has a value of `CalculatorApp`, which will link it to the module in our [calculator.controller.js](.calculator/js/calculator.js) file.
+* We have added a new `ng-controller` attribute with a value of `CalculatorController`
+* We have a `<select></select>` tag that also has an `ng-model` attribute on it.
+* We have a `{{ result() }}` expression that prints out the results of our calculation.
+
+If we look inside the [calculator.controller.js](.calculator/js/calculator.js) we will see how to declare a customer controller.
+
+* First we have the `angular.module` method which declares a `module` which we will talk about more in the next video.
+* We use the `module` to add a `controller`. The controller contains all of the logic for our view.
+* Within our controller we make use a built in angular object called the `scope`. We will learn more about this later but for now it is a way to store global data.
+  * All built in angular objects use start wih a `$` like `$scope`.
+* Our controller shows how to add two important functionalities to our view:
+  1. Data: `$scope.title` adds a `title` variable to our scope and gives it an initial value.
+  2. Methods: `$scope.result` adds a public function to the scop that our view can access to show our calculation.
+
+Now let's make some alterations to the controller to make it a littler better.
+
+1. Lets initialize our variables `$scope.a` and `$scope.b` by giving them a value within our controller.
+2. Lets move our computation into a private function and then call that private function within our public method.
+
+Now tht we have made some changes to the file lets add it to our github repo:
+
+```
+git add -A 
+git commit -m "Updated calculator.controller.js"
+git push -u github vide_1
+```
+
+Now if we go over to our github page we should see that our new branh has been created.
+
+Tune in to the next video where we go over modules and controllers.

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="CalculatorApp">
+    <head>
+        <title>AngularJS Simple Calculator:</title>
+        <!-- Google CDN for AngularJS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+        <!-- Our custom controller -->
+        <script src="js/calculator.controller.js"></script>
+    </head>
+    <!-- In this example we placed ng-app and ng-controller on the same object -->
+    <body ng-controller="CalculatorController">
+        <!-- Display the static title -->
+        <h1>{{title}}</h1>
+        <!-- First number input -->
+        <p><input type="number" ng-model="a" /></p>
+        <!-- Operator Select -->
+        <p><select ng-model="operator">
+                <option>+</option>
+                <option>*</option>
+                <option>-</option>
+                <option>/</option>
+                <option>%</option>
+            </select>
+        </p>
+        <!-- Second number input -->
+        <p><input type="number" ng-model="b" /></p>
+        <p>{{ a }} {{operator}} {{ b }} = {{ result() }}</p>
+    </body>
+</html>

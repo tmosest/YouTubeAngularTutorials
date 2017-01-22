@@ -1,7 +1,11 @@
 // Create a module
 angular.module('CalculatorApp', [])
     // This is a bad way to declare a controller b/c it doesn't respect minification.
-    .controller('CalculatorController', function ($scope) {
+    .controller('CalculatorController', CalculatorController);
+    
+    CalculatorController.$inject = ['$scope'];
+
+    function CalculatorController($scope) {
         // $scope is the old way of defining variables and methods on the controller.
         
         // Here is an example of adding a variable to the scope.
@@ -33,4 +37,4 @@ angular.module('CalculatorApp', [])
             }
             return a + b;
         }
-    });
+    } 

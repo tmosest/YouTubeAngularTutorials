@@ -8,13 +8,13 @@
         <script src="js/calculator.controller.js"></script>
     </head>
     <!-- In this example we placed ng-app and ng-controller on the same object -->
-    <body ng-controller="CalculatorController">
+    <body ng-controller="CalculatorController as ctr">
         <!-- Display the static title -->
-        <h1>{{title}}</h1>
+        <h1>{{ctr.title}}</h1>
         <!-- First number input -->
-        <p><input type="number" ng-model="a" /></p>
+        <p><input type="number" ng-model="ctr.a" /></p>
         <!-- Operator Select -->
-        <p><select ng-model="operator">
+        <p><select ng-model="ctr.operator">
                 <option>+</option>
                 <option>*</option>
                 <option>-</option>
@@ -23,7 +23,7 @@
             </select>
         </p>
         <!-- Second number input -->
-        <p><input type="number" ng-model="b" /></p>
-        <p>{{ a }} {{operator}} {{ b }} = {{ result() }}</p>
+        <p><input type="number" ng-model="ctr.b" /></p>
+        <p>{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
     </body>
 </html>

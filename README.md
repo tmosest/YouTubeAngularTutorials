@@ -1,272 +1,292 @@
 # AngularJS Tutorials by tmosest
-## Video 2: Modules and Controllers
+## Video 3: Directives Part 1
 
 In this video we will become familiar with the github repo.
 
 #### Learning Objectives:
-* Modules
-* Controllers
-* Dependency Injection
+* Directives
+* Built-in directives
+* ngShow, ngHide, ngClick, ngRepeat
 
-### Modules
+### Directives
 
-#### Introduction to Modules
+#### Introduction to Directives
 
-In the last video we saw the following line of code:
+The simplest way to think about `Directives` is that they are a way to add code to an html element.
 
-```javascript
-angular.module('CalculatorApp', []);
-```
+While a controller might hold business logic, a directive will typically hold view logic that you want to use over and over agan.
 
-Which was used to make an angular `module` named `CalculatorApp`.
-
-A module in AngularJs is a way to group various pieces of code into a package under a common name.
-
-In the previous example what we did was create a controller and packages it into the `CalculatorApp`.
-
-In general a module has two parts:
-
-1. The various components that are included in it (controllers, services, factories, and directives).
-
-2. Other modules that are needed for this module called `dependencies`. Angular will go and find those other various modules and give our module access to the components of that module.
-
-Another key property of `modules` is that they bootstrap or initialize angular applications by using the built in `ng-app` directive.
-
-As we have seen the `module` method really takes two components:
-
-```javascript
-angular.module('CalculatorApp', []);
-```
-
-1. A string representing the name of the module which in our case is `CalculatorApp`.
-
-2. An array of dependencies which in our case is the empty `[]`.
-
-Now if we wanted to add some cool 3rd party library graph module (`coolGraphs`) or if we had a seperate ui package for our calculator containing widgets (`CalculatorApp.ui`) we could include them with the following code.
-
-```javascript
-angular.module('CalculatorApp', ['coolGraphs', 'CalculatorApp.ui']);
-// Note that dependencies are a string array.
-```
-#### Modules Common Errors
-
-Now that we know how to define cool new modules and inject other modules into them, it's time to introduce some common pitfalls.
-
-If we wanted to add a component to an already existing module we would use the following code:
-
-```javascript
-angular.module('CalculatorApp');
-// Note the lack of []
-```
-
-This can lead to two common pitfalls:
-
-1. Forgetting the `[]` which results in an `No module found` error.
-2. Searching for the module before it has been declared.
-
-#### Bootstrapping applications
-
-We have already seen two example of bootstrapping angular applications:
-
-1. `ng-app`: A blank ng-app which initializes a generic application.
-2. `ng-app='appName'`: A custom module.
-
-Both of these examples let angular automatically handle the initialization by using an HTML attribut.
-
-There is a way to do this without using the `ng-app` directive that allows us to control when the appllication starts.
-
-Here is an example:
-
-```javascript
-// Define our module
-angular.module('CalculatorApp', []);
-// Init when document is ready
-angular.element.find(document).ready(function () {
-  angular.bootstrap(document, ['CalculatorApp']);
-});
-```
-
-In the above example we are using the built in version of jQuery Lite to find the document and when it is ready we are going to initialize our module.
-
-* Note this is just doing exactly what the `ng-app` attribute does by default.
-
-### Controllers
-
-#### Introduction to Controllers
-
-Now it is time to look at controllers more in depth.
-
-Controllers hold the logic for the view and ensentially connect the model to the view.
-
-Some common applications of controllers are:
-
-* Fetching data from a server for the UI.
-* Determing what parts of the model to show the user.
-* Presentation logic.
-* How to handle user driven events.
-
-As we have previously seen a controller is packaged inside a module:
-
-```javascript
-// Create a module
-angular.module('CalculatorApp', [])
-    // Add a controller the new module.
-    .controller('CalculatorController', function () {
-        // controller code.
-    });
-```
-
-The above lines of code created a module named `CalculatorApp` and added a controller to it named `CalculatorController`.
-
-#### Controllers and Dependency Injection
-
-Controllers (likes modules) can have other components injected into them.
-
-The naive way to do this is like what we did in `calculator.controller.js`:
-
-```javascript
-// Create a module
-angular.module('CalculatorApp', [])
-    // Add a controller the new module.
-    .controller('CalculatorController', function ($scope) {
-        // This time we injected the angular $scope component.
-        $scope.title = 'AngularJS Calculator';
-    });
-```
-
-The problem with this method comes when we try to minify the js file for production code. 
-
-The variable named `$scope` we be transformed to another variable name that angular will no longer recognize.
-
-The easiest way to fix this is to change the way we create a controller:
-
-```javascript
-// Create a module
-angular.module('CalculatorApp', [])
-    // Add a controller the new module.
-    .controller('CalculatorController', ['$scope', function ($scope) {
-        // This time we injected the angular $scope component.
-        $scope.title = 'AngularJS Calculator';
-    }]);
-```
-
-This time we have replaced the second paramter in our controller function with an array of dependencies.
-
-The string `'$scope'` will always reference the first variable in our defining function.
-
-To defined our function we make sure that the last element in our dependency array is our defining function.
-
-Here is another example of that using a private function instead.
-
-```javascript
-// Create a module
-angular.module('CalculatorApp', [])
-    // Add a controller the new module.
-    .controller('CalculatorController', ['$scope', CalculatorController]);
-
-    //Private funcitons
-    function CalculatorController($scope) {
-      $scope.title = 'AngularJS Calculator';
-    }
-```
-
-There is a third way for users to create a controller and safely inject dependencies that doesn't require the above array format.
-
-```javascript
-// Create a module
-angular.module('CalculatorApp', [])
-    // Add a controller the new module.
-    .controller('CalculatorController', CalculatorController);
-
-    CalculatorController.$inject = ['$scope'];
-
-    //Private funcitons
-    function CalculatorController($scope) {
-      $scope.title = 'AngularJS Calculator';
-    }
-```
-
-Something to remember with any of these approaches is that order matters:
-
-```javascript
-// Create a module
-angular.module('CalculatorApp', [])
-    // Add a controller the new module.
-    .controller('CalculatorController', CalculatorController);
-
-    CalculatorController.$inject = ['$q', '$scope'];
-
-    //Private funcitons
-    function CalculatorController($scope, $q) {
-      $scope.title = 'AngularJS Calculator';
-    }
-```
-
-In the above example anytime we use the `$scope` variable inside our controller we are really referencing `$q`.
-* This is because we injected it as the first dependency and it is the first parameter in our funciton.
-
-#### ng-controller
-
-Now that we can create a controller we need to connected it to the View.
-
-To do this we use the built in `ng-controller` directived like we did in `index.html` for the simple calculator.
+One example of this would be a slider, we could make a custom slider directive that we use any where we want a slider.
 
 ```HTML
-<body ng-controller="CalculatorController">
-<!-- some elements -->
-</body>
+<div ng-slider>
+    <div ng-slide-1>...</div>
+    <div ng-slide-2>...</div>
+    <div ng-slide-3>...</div>
+</div>
 ```
 
-This will bind the controller that we have created to this elements assuming we have also bound the DOm to our module.
+In the above example we placed a `custom attribute` on our html element to turn it into a directive.
 
-We are free to bind both the controller and the module to the same element:
+This is not the only way to declare a directive, we could also create a custom element, class, or comment.
+
+However we will go over how to do that in a future video.
+
+#### A New Light on Old Views
+
+In the previous video we used the following code to link our `module` and `controller` to our view.
 
 ```HTML
-<body ng-app="CalculatorApp" ng-controller="CalculatorController">
-<!-- some elements -->
-</body>
+<html ng-app="module">
+    <!-- ... -->
+    <body ng-controller="controller">
+        <!-- ... -->
+    </body>
+</html>
 ```
 
-Last time we used the `$scope` to make our controllers data and operations accessible to the View.
-This however is bad practice and no longer used because it overcrowds the `$scope`.
+What we were really doing was using two built-in AngularJS directives to do the work for us.
 
-Instead we can think of the controller as it's own object/class and assign the operations directly to it.
+`ng-app` binds a `module` to a part of the DOM and `ng-controller` does the same for a controller.
 
-```javascript
-function CalculatorController() {
-  var vm = this; //Very important b/c of the way JavaScript handles 'this' inside fucntions.
-  // Now replace $scope with vm (short for View Model)
-  vm.title = 'AngularJS Calculator';
-  // ...
-  vm.result = function () { 
-    // ...
-  };
-}
-```
+We have also seen `ng-model` which binds a form element to a variable.
 
-Doing this also leads to another needed update though.
-The view can no longer just reference a variable like `a` by name because that is shorthand for `$scope.a`.
+### Built-In Views
 
-To fix this we could do something like: 
+#### Introdution
+
+Angular has a lot of these built in directives to add additional functionality.
+
+[directives](https://docs.angularjs.org/api/ng/directive)
+
+It is important to have a reference to them. This will prevent you from creating a directive that already exists.
+
+#### ngShow and ngHide
+
+The first built in directive that we are going to do over is `ng-show` and `ng-hide`.
+
+These two directives allow us to show or hide a part of the DOM based on a boolean value.
+
+Let's go to `calculator.controller.js` and add a variable `vm.showTitle = false;`.
+
+Now let's go to `index.html` and update:
 
 ```HTML
-<body ng-app="CalculatorApp" ng-controller="CalculatorController">
-<h1>{{CalculatorController.title}}</h1>
-<!-- some elements -->
-</body>
-```
-
-However that would lead to typing `CalculatorController` over and over again which is tedious.
-
-Instead angular provides us with an additional option for the `ng-controller` attribute.
-
-We can use `as` to assign `CalculatorController` to a shorter name:
-
-```HTML
-<body ng-app="CalculatorApp" ng-controller="CalculatorController as ctr">
 <h1>{{ctr.title}}</h1>
-<!-- some elements -->
-</body>
 ```
 
-In the above example we no longer need to use `CalculatorController` because we have replaced it with `ctr`.
+to:
+
+```HTML
+<h1 ng-show="ctr.showTitle">{{ctr.title}}</h1>
+```
+
+If we refresh the browser the title should disappear. 
+
+This is because of the fact that `ng-show` only appears when the value of the attribute is true.
+
+Now let's set `vm.showTitle = true;` look at a more productive example.
+
+In the last video we got rid of the ugly `=` at the bottom of html by setting some default values.
+
+However if the user removes the inut values we are left with something like:
+
+```
++ = 0
+``` 
+
+Which looks bad. Let's hide that if `a` or `b` is undefined.
+
+Let's add `vm.hideResults = vm.a == null || vm.b == null;` below `vm.showTitle` and update:
+
+```HTML
+<p>{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
+```
+
+to
+
+```HTML
+<p ng-hide="ctr.hideResults">{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
+```
+
+Now if you refresh your browser you'll notice and remove a number, you'll notice that nothing is happening.
+
+This is due to the fact that `vm.hideResults` never get's updated. We set it to true when the controller was activated and it never get's tested again.
+
+To fix this let's copy it into our only method:
+
+```javascript
+ vm.result = function () {
+    vm.hideResults = vm.a == null || vm.b == null; // This value gets updated!
+    return calculate(vm.a, vm.b, vm.operator);
+};
+```
+
+Since `ctr.result()` calls this function everytime we make an update, it will work now!
+
+As you can see `ng-show` and `ng-hide` provide a powerful way to display content to the user.
+
+#### ngClick
+
+To show off some more built-in directives we are going to make a basic todo app.
+
+We start by adding another js file named `todo.controller.js` then we place the following code in it:
+
+```javascript
+// Notice the lack of [] b/c we already defined CalculatorApp in calculator.controller.js
+angular.module('CalculatorApp')
+    .controller('TodoController', TodoController);
+    
+    TodoController.$inject = [];
+
+    function TodoController() {
+        var vm = this;
+        // variables
+        vm.title = "Todo List";
+        vm.count = 0;
+    }
+```
+
+Like before we are creating a new module and a new controller.
+
+We now need to add them to the `index.html` file.
+
+Below:
+
+```HTML
+<script src="js/calculator.controller.js"></script>
+```
+
+We paste:
+
+```HTML
+<script src="js/todo.controller.js"></script>
+```
+
+Then remove the `ng-controller="CalculatorController as ctr"` from the `body` tag.
+
+Finally we wrap the html inside the body tag with:
+
+```HTML
+<div ng-app="CalculatorApp" ng-controller="CalculatorController as ctr">
+    <!-- Calculator code -->
+</div>
+```
+
+This will confine our Calculator app to that div and allow use to make another div above it that will hold our Todo App.
+
+```HTML
+<div ng-controller="TodoController as ctr">
+    <h1>{{ctr.title}} {{ctr.count}}</h1>
+</div>
+```
+
+Refresh and you should see "Todo List 0" appear.
+
+Now let's look at another built in directive called `ng-click`.
+
+This directive will allow us to bind a controller method to the onClick event for an element.
+
+In `todo.controller.js` we add a method:
+
+```javascript
+vm.add = function () {
+    vm.count++;
+};
+```
+
+When this function is called it will simply increment the count variable by one.
+
+Now we add the following inside our Todo Div:
+
+```HTML
+<p><button ng-click="ctr.add()">Add Task</button></p>
+```
+
+Now when press the button the click even will call `vm.add()` which will make the count in the title increase.
+
+#### ngRepeat
+
+Now let's look at show some tasks using the `ng-repeat` directive.
+
+This directive allows us to loop over an array in our html and show all of the items.
+
+First let's add an array and a way to add elements to it.
+
+In `index.html` place this code betwen the button and the title.
+
+```HTML
+<p>Task Name: <input type=text ng-model="ctr.task" /></p>
+```
+
+Now in `todo.controller.js` let's add an array and a way to add to add them:
+
+```javascript
+vm.todos = []; // empty array
+// methods
+vm.add = function () {
+    vm.count++;
+    vm.todos.push(vm.task);
+};
+```
+
+Now when we click the button it not only adds to the count it also pushes the text in our input into the array.
+
+However we have no way to see that!
+
+To fix this we add the following code below our button:
+
+```HTML
+<p>
+    <ul>
+        <li ng-repeat="todo in ctr.todos">{{ todo }}</li>
+    </ul>
+</p>
+```
+
+Now we can add items to our to do list however if we try to add two with the same title it will explode!
+
+Let's fix this by making a custom object to put in there instead of a string:
+
+Update `todo.controller.js` to:
+
+```javascript
+vm.task = {}; // empty object
+// methods
+vm.add = function () {
+    vm.count++;
+    vm.task = {
+        id: vm.count,
+        title: vm.taskTitle
+    };
+    vm.todos.push(vm.task);
+};
+```
+
+And `index.html` to:
+
+```HTML
+<p>Task Name: <input type=text ng-model="ctr.taskTitle" /></p>
+```
+
+Now when we click the button we will add a new task object with an id of the current count and a title equal to what we type in.
+
+We can now add multiple tasks with the same name, but they look like this:
+
+```
+{"id":1,"title":"Todo 1"}
+```
+
+To fix that we just update 
+
+```HTML
+<li ng-repeat="todo in ctr.todos">{{ todo }}</li>
+```
+
+to 
+
+```HTML
+<li ng-repeat="todo in ctr.todos">{{ todo.title }}</li>
+```
+
+This will force Angular to spit out just the object's title and not the whole object.

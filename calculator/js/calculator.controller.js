@@ -1,21 +1,24 @@
 // Create a module
 angular.module('CalculatorApp', [])
-    // This is a bad way to declare a controller b/c it doesn't respect minification.
     .controller('CalculatorController', CalculatorController);
     
-    CalculatorController.$inject = ['$scope'];
+    CalculatorController.$inject = [];
 
-    function CalculatorController($scope) {
-        // $scope is the old way of defining variables and methods on the controller.
-        
+    function CalculatorController() {
+        var vm = this;        
         // Here is an example of adding a variable to the scope.
-        $scope.title = 'AngularJS Calculator';
-        $scope.a = 10;
-        $scope.b = 5;
-        $scope.operator = '+';
+        vm.title = 'AngularJS Calculator';
+        vm.a = 10;
+        vm.b = 5;
+        vm.operator = '+';
+        // Example of ng-show
+        vm.showTitle = true;
+        // Example of ng-hide;
+        vm.hideResults = vm.a == null || vm.b == null; // This only gets set once
         // Here is an example of adding a method to the scope.
-        $scope.result = function () {
-            return calculate($scope.a, $scope.b, $scope.operator);
+        vm.result = function () {
+            vm.hideResults = vm.a == null || vm.b == null; // This value gets updated!
+            return calculate(vm.a, vm.b, vm.operator);
         };
         // Private functions
         function calculate(a, b, operator)

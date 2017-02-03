@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html ng-app="CalculatorApp">
+<html ng-app="CalculatorApp" >
     <head>
         <title>AngularJS Simple Calculator:</title>
         <!-- Google CDN for AngularJS -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
         <!-- Our custom controller -->
         <script src="js/calculator.controller.js"></script>
+        <script src="js/todo.controller.js"></script>
     </head>
     <!-- In this example we placed ng-app and ng-controller on the same object -->
-    <body ng-controller="CalculatorController as ctr">
-        <!-- Display the static title -->
-        <h1>{{ctr.title}}</h1>
-        <!-- First number input -->
-        <p><input type="number" ng-model="ctr.a" /></p>
-        <!-- Operator Select -->
-        <p><select ng-model="ctr.operator">
-                <option>+</option>
-                <option>*</option>
-                <option>-</option>
-                <option>/</option>
-                <option>%</option>
-            </select>
-        </p>
-        <!-- Second number input -->
-        <p><input type="number" ng-model="ctr.b" /></p>
-        <p>{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
+    <body>
+        <div ng-controller="TodoController as ctr">
+            <h1>{{ctr.title}} {{ctr.count}}</h1>
+            <p>Task Name: <input type=text ng-model="ctr.taskTitle" /></p>
+            <p><button ng-click="ctr.add()">Add Task</button></p>
+            <p>
+                <ul>
+                    <li ng-repeat="todo in ctr.todos">{{ todo.title }}</li>
+                </ul>
+            </p>
+        </div>
+        <div ng-controller="CalculatorController as ctr">
+            <!-- Display the static title -->
+            <h1 ng-show="ctr.showTitle">{{ctr.title}}</h1>
+            <!-- First number input -->
+            <p>Number a: <input type="number" ng-model="ctr.a" /></p>
+            <!-- Operator Select -->
+            <p>Operator: <select ng-model="ctr.operator">
+                    <option>+</option>
+                    <option>*</option>
+                    <option>-</option>
+                    <option>/</option>
+                    <option>%</option>
+                </select>
+            </p>
+            <!-- Second number input -->
+            <p>Number b: <input type="number" ng-model="ctr.b" /></p>
+            <p ng-hide="ctr.hideResults">{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
+        </div>
     </body>
 </html>

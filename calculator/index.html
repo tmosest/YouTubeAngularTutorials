@@ -7,18 +7,43 @@
         <!-- Our custom controller -->
         <script src="js/calculator.controller.js"></script>
         <script src="js/todo.controller.js"></script>
+        <style>
+            .strike {
+                text-decoration: line-through;
+            }
+            .important {
+                font-weight: bold;
+            }
+        </style>
     </head>
     <!-- In this example we placed ng-app and ng-controller on the same object -->
     <body>
-        <div ng-controller="TodoController as ctr">
-            <h1>{{ctr.title}} {{ctr.count}}</h1>
-            <p>Task Name: <input type=text ng-model="ctr.taskTitle" /></p>
-            <p><button ng-click="ctr.add()">Add Task</button></p>
-            <p>
-                <ul>
-                    <li ng-repeat="todo in ctr.todos">{{ todo.title }}</li>
-                </ul>
-            </p>
+        <div 
+            ng-controller="TodoController as ctr">
+            <form
+                name="todoForm"
+                ng-submit="todoForm.$valid && ctr.add()">
+                <h1>{{ctr.title}} {{ctr.count}}</h1>
+                <p>Task Name: 
+                    <input type=text
+                        ng-model="ctr.taskTitle"
+                        ng-required="true"
+                        ng-minlength="3"
+                        ng-maxlength="20"/>
+                </p>
+                <p><input type="submit" value="Add Task" ng-disabled="todoForm.$invalid"/></p>
+                <p>
+                    <ul>
+                        <li ng-repeat="todo in ctr.todos">
+                            <span ng-class="{strike: todo.checked, important: todo.important}">
+                                {{ todo.title }}
+                            </span>
+                            <label>(C): <input type="checkbox" ng-model="todo.checked"></label>
+                            <label>(I): <input type="checkbox" ng-model="todo.important"></label>
+                        </li>
+                    </ul>
+                </p>
+            </form>
         </div>
         <div ng-controller="CalculatorController as ctr">
             <!-- Display the static title -->

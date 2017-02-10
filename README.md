@@ -1,5 +1,5 @@
 # AngularJS Tutorials by tmosest
-## Video 3: Directives Part 1
+## Video 4: Directives Part 2
 
 In this video we will become familiar with the github repo.
 

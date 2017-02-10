@@ -4,255 +4,89 @@
 In this video we will become familiar with the github repo.
 
 #### Learning Objectives:
-* Directives
-* Built-in directives
-* ngShow, ngHide, ngClick, ngRepeat
+* ngSubmit, ngMinlength, ngMaxlength, ngDisabled, ngClass
 
-### Directives
+### More Built-In Directives
 
-#### Introduction to Directives
+#### ngSubmit
 
-The simplest way to think about `Directives` is that they are a way to add code to an html element.
+Let's pick up where we left off in the last video and continues to add new features to our Todo Application.
 
-While a controller might hold business logic, a directive will typically hold view logic that you want to use over and over agan.
+One thing that would be nice is if we could simply press enter to add a new item to our todo list.
 
-One example of this would be a slider, we could make a custom slider directive that we use any where we want a slider.
+Now if we think about it when we press enter in a normal HTML form it submits the form.
 
-```HTML
-<div ng-slider>
-    <div ng-slide-1>...</div>
-    <div ng-slide-2>...</div>
-    <div ng-slide-3>...</div>
+So if we could override the default event for the form submission we would be good to go.
+
+Luckily AngularJS gives us a way to do this with the `ng-submit` directive.
+
+`ng-submit` binds to the form's onsubmit events and overrides them, but only if the form does not contain an `action`, `data-action`, or `x-action`.
+
+`ng-submit` can be used as an element
+
+```html
+<ng-submit 
+    ng-submit="expression">
+</ng-submit>
+```
+
+or as an attribute (which is the more common approach due to IE issues).
+
+```html
+<form
+    ng-submit="expression">
+</form>
+```
+
+To show how this would work let's go inside of our [index.html file](./calculator/index.html) and wrap the code inside of the TodoController div in a form like so.
+
+```html
+<div 
+    ng-controller="TodoController as ctr">
+    <form
+        ng-submit="">
+        <h1>{{ctr.title}} {{ctr.count}}</h1>
+        <p>Task Name: <input type=text ng-model="ctr.taskTitle" /></p>
+        <p><button ng-click="ctr.add()">Add Task</button></p>
+        <p>
+            <ul>
+                <li ng-repeat="todo in ctr.todos">{{ todo.title }}</li>
+            </ul>
+        </p>
+    </form>
 </div>
 ```
 
-In the above example we placed a `custom attribute` on our html element to turn it into a directive.
+Now what we can do is transform the button into a submit button and then move the function `add()` to be inside of the `ng-submit`
 
-This is not the only way to declare a directive, we could also create a custom element, class, or comment.
-
-However we will go over how to do that in a future video.
-
-#### A New Light on Old Views
-
-In the previous video we used the following code to link our `module` and `controller` to our view.
-
-```HTML
-<html ng-app="module">
-    <!-- ... -->
-    <body ng-controller="controller">
-        <!-- ... -->
-    </body>
-</html>
-```
-
-What we were really doing was using two built-in AngularJS directives to do the work for us.
-
-`ng-app` binds a `module` to a part of the DOM and `ng-controller` does the same for a controller.
-
-We have also seen `ng-model` which binds a form element to a variable.
-
-### Built-In Views
-
-#### Introdution
-
-Angular has a lot of these built in directives to add additional functionality.
-
-[directives](https://docs.angularjs.org/api/ng/directive)
-
-It is important to have a reference to them. This will prevent you from creating a directive that already exists.
-
-#### ngShow and ngHide
-
-The first built in directive that we are going to do over is `ng-show` and `ng-hide`.
-
-These two directives allow us to show or hide a part of the DOM based on a boolean value.
-
-Let's go to `calculator.controller.js` and add a variable `vm.showTitle = false;`.
-
-Now let's go to `index.html` and update:
-
-```HTML
-<h1>{{ctr.title}}</h1>
-```
-
-to:
-
-```HTML
-<h1 ng-show="ctr.showTitle">{{ctr.title}}</h1>
-```
-
-If we refresh the browser the title should disappear. 
-
-This is because of the fact that `ng-show` only appears when the value of the attribute is true.
-
-Now let's set `vm.showTitle = true;` look at a more productive example.
-
-In the last video we got rid of the ugly `=` at the bottom of html by setting some default values.
-
-However if the user removes the inut values we are left with something like:
-
-```
-+ = 0
-``` 
-
-Which looks bad. Let's hide that if `a` or `b` is undefined.
-
-Let's add `vm.hideResults = vm.a == null || vm.b == null;` below `vm.showTitle` and update:
-
-```HTML
-<p>{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
-```
-
-to
-
-```HTML
-<p ng-hide="ctr.hideResults">{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
-```
-
-Now if you refresh your browser you'll notice and remove a number, you'll notice that nothing is happening.
-
-This is due to the fact that `vm.hideResults` never get's updated. We set it to true when the controller was activated and it never get's tested again.
-
-To fix this let's copy it into our only method:
-
-```javascript
- vm.result = function () {
-    vm.hideResults = vm.a == null || vm.b == null; // This value gets updated!
-    return calculate(vm.a, vm.b, vm.operator);
-};
-```
-
-Since `ctr.result()` calls this function everytime we make an update, it will work now!
-
-As you can see `ng-show` and `ng-hide` provide a powerful way to display content to the user.
-
-#### ngClick
-
-To show off some more built-in directives we are going to make a basic todo app.
-
-We start by adding another js file named `todo.controller.js` then we place the following code in it:
-
-```javascript
-// Notice the lack of [] b/c we already defined CalculatorApp in calculator.controller.js
-angular.module('CalculatorApp')
-    .controller('TodoController', TodoController);
-    
-    TodoController.$inject = [];
-
-    function TodoController() {
-        var vm = this;
-        // variables
-        vm.title = "Todo List";
-        vm.count = 0;
-    }
-```
-
-Like before we are creating a new module and a new controller.
-
-We now need to add them to the `index.html` file.
-
-Below:
-
-```HTML
-<script src="js/calculator.controller.js"></script>
-```
-
-We paste:
-
-```HTML
-<script src="js/todo.controller.js"></script>
-```
-
-Then remove the `ng-controller="CalculatorController as ctr"` from the `body` tag.
-
-Finally we wrap the html inside the body tag with:
-
-```HTML
-<div ng-app="CalculatorApp" ng-controller="CalculatorController as ctr">
-    <!-- Calculator code -->
+```html
+<div 
+    ng-controller="TodoController as ctr">
+    <form
+        ng-submit="ctr.add()">
+        <h1>{{ctr.title}} {{ctr.count}}</h1>
+        <p>Task Name: <input type=text ng-model="ctr.taskTitle" /></p>
+        <p><input type="submit" value="Add Task" /></p>
+        <p>
+            <ul>
+                <li ng-repeat="todo in ctr.todos">{{ todo.title }}</li>
+            </ul>
+        </p>
+    </form>
 </div>
 ```
 
-This will confine our Calculator app to that div and allow use to make another div above it that will hold our Todo App.
+Now when we press enter inside of the text input the form fires the `add()` function. We added a cool new feature without even having to change a single line of JavaScript.
 
-```HTML
-<div ng-controller="TodoController as ctr">
-    <h1>{{ctr.title}} {{ctr.count}}</h1>
-</div>
-```
+That is pretty amazing.
 
-Refresh and you should see "Todo List 0" appear.
+However while we are add it let's add an additional feature to our form just to make things a little bit more convient.
 
-Now let's look at another built in directive called `ng-click`.
+When we press enter inside of the text input it should clear the text for us.
 
-This directive will allow us to bind a controller method to the onClick event for an element.
-
-In `todo.controller.js` we add a method:
+To do this lets add a few lines of code to our [todo.controller.js file](./calculator/js/todo.controller.js)
 
 ```javascript
-vm.add = function () {
-    vm.count++;
-};
-```
-
-When this function is called it will simply increment the count variable by one.
-
-Now we add the following inside our Todo Div:
-
-```HTML
-<p><button ng-click="ctr.add()">Add Task</button></p>
-```
-
-Now when press the button the click even will call `vm.add()` which will make the count in the title increase.
-
-#### ngRepeat
-
-Now let's look at show some tasks using the `ng-repeat` directive.
-
-This directive allows us to loop over an array in our html and show all of the items.
-
-First let's add an array and a way to add elements to it.
-
-In `index.html` place this code betwen the button and the title.
-
-```HTML
-<p>Task Name: <input type=text ng-model="ctr.task" /></p>
-```
-
-Now in `todo.controller.js` let's add an array and a way to add to add them:
-
-```javascript
-vm.todos = []; // empty array
-// methods
-vm.add = function () {
-    vm.count++;
-    vm.todos.push(vm.task);
-};
-```
-
-Now when we click the button it not only adds to the count it also pushes the text in our input into the array.
-
-However we have no way to see that!
-
-To fix this we add the following code below our button:
-
-```HTML
-<p>
-    <ul>
-        <li ng-repeat="todo in ctr.todos">{{ todo }}</li>
-    </ul>
-</p>
-```
-
-Now we can add items to our to do list however if we try to add two with the same title it will explode!
-
-Let's fix this by making a custom object to put in there instead of a string:
-
-Update `todo.controller.js` to:
-
-```javascript
-vm.task = {}; // empty object
-// methods
 vm.add = function () {
     vm.count++;
     vm.task = {
@@ -260,33 +94,210 @@ vm.add = function () {
         title: vm.taskTitle
     };
     vm.todos.push(vm.task);
-};
+    // Reset the taskTitle:
+    vm.taskTitle = null;
+}; // end add method
 ```
 
-And `index.html` to:
+Now after we press enter the `add()` method is fired and right before it finishes the `taskTitle` variable is set to null clearing the field.
 
-```HTML
+#### ngRequired
+
+After playing around with the form for a few minutes we realize that if we press the enter key too fast then we can submit a blank todo task!
+
+Let's fix this by not allowing our form to submit with a string that is null.
+
+We could do this the hard way and add some calculations to the controller that would check the length of the stirng before pushing our task to the array.
+
+But why work hard when we can work smart! Let's use another built in angular directive.
+
+`ngRequired` allows us to set the required value attribut of an element based on the value of an expression.
+
+To see how this works lets update:
+
+```html
 <p>Task Name: <input type=text ng-model="ctr.taskTitle" /></p>
 ```
 
-Now when we click the button we will add a new task object with an id of the current count and a title equal to what we type in.
+to
 
-We can now add multiple tasks with the same name, but they look like this:
-
-```
-{"id":1,"title":"Todo 1"}
-```
-
-To fix that we just update 
-
-```HTML
-<li ng-repeat="todo in ctr.todos">{{ todo }}</li>
+```html
+<p>Task Name: 
+    <input type=text 
+        ng-model="ctr.taskTitle" 
+        ng-required="true" />
+</p>
 ```
 
-to 
+In this simple example above we simply set required to always be true but we could have used a variable to do this dynamically.
 
-```HTML
-<li ng-repeat="todo in ctr.todos">{{ todo.title }}</li>
+If we go back and test the form now we will see that we can still add blank requests.
+
+However if we inspect the form we will see that it has an additional class now of `ng-invalid` whenever the input is null.
+
+All we need to do now is find some way to utilize that class.
+
+We can do this by giving the form a name and then accessing the boolean value with `formName.$valid`
+
+Now there is more than one way to do this but we are going to go with the HTML approach: if we add `formName.$valid && expression` to our ng-submit then it will check to see if formName.$valid is true before firing our method.
+
+Lets update our html to:
+
+```html
+<!-- Add a name and update ng-submit -->
+<form
+    name="todoForm"
+    ng-submit="todoForm.$valid && ctr.add()">
+    <h1>{{ctr.title}} {{ctr.count}}</h1>
+    <p>Task Name: 
+        <input type=text 
+            ng-model="ctr.taskTitle"
+            ng-required="true"/>
+    </p>
+    <p><input type="submit" value="Add Task" /></p>
+    <p>
+        <ul>
+            <li ng-repeat="todo in ctr.todos">{{ todo.title }}</li>
+        </ul>
+    </p>
+</form>
 ```
 
-This will force Angular to spit out just the object's title and not the whole object.
+Now try to submit a null text input and you will see that you cannot.
+
+#### ngMinlength and ngMaxlength
+
+In my opinion a task should isn't worth writing down, unless it has atleast 3 letters.
+
+Again we could caluculate this ourselves inside of the controller but there is no reason to when angular has another built in directive.
+
+`ngMinlength` adds a validator to a `ng-model` (the directive that is responsible for two-way data binding) that checks for a minimum length.
+
+Lets test this out on our Task Name input:
+
+```html
+<p>Task Name:  
+    <input type=text 
+        ng-model="ctr.taskTitle"
+        ng-required="true" />
+</p>
+```
+
+Should become:
+
+```html
+<p>Task Name:  
+    <input type=text 
+        ng-model="ctr.taskTitle"
+        ng-required="true"
+        ng-minlength="3" />
+</p>
+```
+
+Now if we try to submit a task with less than 3 letters it won't work.
+
+Similarily I think that a task with more than 20 letters is too long and should be broken down into smaller tasks.
+
+We can accomplish this by using the `ng-maxlength` directive as follows:
+
+```html
+<p>Task Name:  
+    <input type=text 
+        ng-model="ctr.taskTitle"
+        ng-required="true"
+        ng-minlength="3"
+        ng-maxlength="20" />
+</p>
+```
+
+Now we cannot submit a task with 21 characters in it.
+
+#### ngDisabled
+
+One annoying thing about the current state of the UI is that the user thinks that they can still click the submit button even when the input is null.
+
+We can fix this by disabling the submit button whenever the form is null.
+
+To do this we use the built-in `ng-disabled` directive.
+
+```html
+<p><input type="submit" value="Add Task" ng-disabled="todoForm.$invalid"/></p>
+```
+
+This time instead of feeding it `todoForm.$valid` we feed it `todoForm.$invalid` to make it disabled whenever the form isn't ready yet.
+
+#### ngClass
+
+Another cool feature that angular provides is the ability to dynamically add and remove classes using the `ng-class` attribute.
+
+Let's add the ability to strike out completed tasks in our todo list.
+
+First we are going to need a class to represent a marked out item:
+
+Add the following style tag somewhere inside your [index.html file](./calculator/index.html)
+
+```html
+<style>
+    .strike {
+        text-decoration: line-through;
+    }
+</style>
+```
+
+Now we need to add a new attribute to our item object inside of [todo.controller.js file](./calculator/js/todo.controller.js):
+
+```javascript
+vm.task = {
+    id: vm.count,
+    title: vm.taskTitle,
+    checked: false // new checked property
+};
+```
+
+Now we just need to tie this into our html as follows:
+
+```html
+<li ng-repeat="todo in ctr.todos" 
+    ng-class="{strike: todo.checked}">
+    {{ todo.title }}
+    <input type="checkbox" ng-model="todo.checked">
+</li>
+```
+
+Now whenever todo.checked is true it will add the strike class to the list element and put a line through it.
+
+If we want we can declare multiple classes with different boolean properties by adding a comma.
+
+Let's add a bold important item.
+
+```html
+<style>
+    .strike {
+        text-decoration: line-through;
+    }
+    .important {
+        font-weight: bold;
+    }
+</style>
+```
+
+```javascript
+vm.task = {
+    id: vm.count,
+    title: vm.taskTitle,
+    checked: false,
+    important: false
+};
+```
+
+```html
+<li ng-repeat="todo in ctr.todos">
+    <span ng-class="{strike: todo.checked, important: todo.important}">
+        {{ todo.title }}
+    </span>
+    <label>(C): <input type="checkbox" ng-model="todo.checked"></label>
+    <label>(I): <input type="checkbox" ng-model="todo.important"></label>
+</li>
+```
+
+Thank you and tune in for next time.

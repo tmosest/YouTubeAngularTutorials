@@ -1,7 +1,7 @@
 # AngularJS Tutorials by tmosest
 ## Video 2: Modules and Controllers
 
-In this video we will become familiar with the github repo.
+In this video we are going to learn about angular modules and controllers.
 
 #### Learning Objectives:
 * Modules

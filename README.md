@@ -1,7 +1,7 @@
 # AngularJS Tutorials by tmosest
 ## Video 3: Directives Part 1
 
-In this video we will become familiar with the github repo.
+In this video we will start to learn about angular built-in directives.
 
 #### Learning Objectives:
 * Directives

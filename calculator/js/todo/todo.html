@@ -1,0 +1,25 @@
+<div ng-controller="TodoController as ctr">
+  <form name="todoForm" ng-submit="todoForm.$valid && ctr.add()">
+    <h1>{{ctr.title}} {{ctr.count}}</h1>
+    <p>Task Name:
+      <input type=text ng-model="ctr.taskTitle" ng-required="true" ng-minlength="3" ng-maxlength="20" />
+    </p>
+    <p><input type="submit" value="Add Task" ng-disabled="todoForm.$invalid" /></p>
+    <p>
+      <ul>
+        <li ng-repeat="todo in ctr.todos" ng-class="{blue: $first,
+                                       yellow: $last,
+                                       red: $even,
+                                       green: $odd,
+                                       orange: $middle}">
+          #{{$index}}
+          <span ng-class="{strike: todo.checked, important: todo.important}" ng-bind="todo.title">
+                            </span>
+          <label>(C): <input type="checkbox" ng-model="todo.checked"></label>
+          <label>(I): <input type="checkbox" ng-model="todo.important"></label>
+          <button ng-if="todo.checked && !todo.important" ng-click="ctr.delete(todo.id)">(D)</button>
+          </li>
+      </ul>
+    </p>
+  </form>
+</div>

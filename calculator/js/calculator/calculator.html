@@ -1,0 +1,18 @@
+<div ng-controller="CalculatorController as ctr">
+  <!-- Display the static title -->
+  <h1 ng-show="ctr.showTitle" ng-bind="::ctr.title"></h1>
+  <!-- First number input -->
+  <p>Number a: <input type="number" ng-model="ctr.a" /></p>
+  <!-- Operator Select -->
+  <p>Operator: <select ng-model="ctr.operator">
+                    <option>+</option>
+                    <option>*</option>
+                    <option>-</option>
+                    <option>/</option>
+                    <option>%</option>
+                </select>
+  </p>
+  <!-- Second number input -->
+  <p>Number b: <input type="number" ng-model="ctr.b" /></p>
+  <p ng-hide="ctr.hideResults">{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
+</div>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html ng-app="CalculatorApp" >
+<html ng-app="CalculatorApp" ng-cloak>
     <head>
         <title>AngularJS Simple Calculator:</title>
         <!-- Google CDN for AngularJS -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
         <!-- Our custom controller -->
-        <script src="js/calculator.controller.js"></script>
-        <script src="js/todo.controller.js"></script>
+        <script src="js/calculator/calculator.controller.js"></script>
+        <script src="js/todo/todo.controller.js"></script>
         <style>
             .strike {
                 text-decoration: line-through;
@@ -14,54 +14,26 @@
             .important {
                 font-weight: bold;
             }
+            .blue {
+                border-top: 1px solid blue;
+            }
+            .yellow {
+                border-left: 1px solid yellow;
+            }
+            .red {
+                border-bottom: 1px solid red;
+            }
+            .green {
+                border-bottom: 1px solid green;
+            }
+            .orange {
+                color: orange;
+            }
         </style>
     </head>
     <!-- In this example we placed ng-app and ng-controller on the same object -->
     <body>
-        <div 
-            ng-controller="TodoController as ctr">
-            <form
-                name="todoForm"
-                ng-submit="todoForm.$valid && ctr.add()">
-                <h1>{{ctr.title}} {{ctr.count}}</h1>
-                <p>Task Name: 
-                    <input type=text
-                        ng-model="ctr.taskTitle"
-                        ng-required="true"
-                        ng-minlength="3"
-                        ng-maxlength="20"/>
-                </p>
-                <p><input type="submit" value="Add Task" ng-disabled="todoForm.$invalid"/></p>
-                <p>
-                    <ul>
-                        <li ng-repeat="todo in ctr.todos">
-                            <span ng-class="{strike: todo.checked, important: todo.important}">
-                                {{ todo.title }}
-                            </span>
-                            <label>(C): <input type="checkbox" ng-model="todo.checked"></label>
-                            <label>(I): <input type="checkbox" ng-model="todo.important"></label>
-                        </li>
-                    </ul>
-                </p>
-            </form>
-        </div>
-        <div ng-controller="CalculatorController as ctr">
-            <!-- Display the static title -->
-            <h1 ng-show="ctr.showTitle">{{ctr.title}}</h1>
-            <!-- First number input -->
-            <p>Number a: <input type="number" ng-model="ctr.a" /></p>
-            <!-- Operator Select -->
-            <p>Operator: <select ng-model="ctr.operator">
-                    <option>+</option>
-                    <option>*</option>
-                    <option>-</option>
-                    <option>/</option>
-                    <option>%</option>
-                </select>
-            </p>
-            <!-- Second number input -->
-            <p>Number b: <input type="number" ng-model="ctr.b" /></p>
-            <p ng-hide="ctr.hideResults">{{ ctr.a }} {{ctr.operator}} {{ ctr.b }} = {{ ctr.result() }}</p>
-        </div>
+        <div ng-include="'js/todo/todo.html'"></div>
+        <div ng-include="'js/calculator/calculator.html'"></div>
     </body>
 </html>

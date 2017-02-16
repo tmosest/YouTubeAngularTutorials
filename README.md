@@ -1,7 +1,7 @@
 #AngularJS Tutorials by tmosest
 ##Video 1: Working with the Github Repository
 
-In this video we will become familiar with the github repo.
+In this video we are going to learn about angular modules and controllers.
 
 ####Learning Objectives:
 * How to clone it.

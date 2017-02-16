@@ -1,7 +1,7 @@
 # AngularJS Tutorials by tmosest
 ## Video 4: Directives Part 2
 
-In this video we will become familiar with the github repo.
+In this video we will continue to learn more about built in angular directives.
 
 #### Learning Objectives:
 * ngSubmit, ngMinlength, ngMaxlength, ngDisabled, ngClass
